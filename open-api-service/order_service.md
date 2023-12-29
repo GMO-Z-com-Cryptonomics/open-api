@@ -9,9 +9,9 @@ This API is provide information of trading.
 * [Place Order Service](#placeorderservice)
 * [Get Order Service](#getorderservice)
 * [Cancel Order Service](#cancelorderservice)
-* [Cancel All Order Service](#web-socket-api-documentation)
-* [Get All Order Service](#stream-demo)
-* [Open Order Service](#live-order-book)
+* [Cancel All Order Service](#cancelAllOrderService)
+* [Get All Order Service](#getAllOrderService)
+* [Open Order Service](#openOrderService)
 
 ## PlaceOrderService
 
@@ -355,6 +355,199 @@ This API is provide information of trading.
         "price": "21232",
         "status": "21232",
         "timestamp": "21232"
+    }
+  ]
+```
+
+##### Example code 400, 500
+
+``` Json
+  {
+    "timestamp": "2023-12-05T14:18:15.076+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "This order is being processed.",
+    "path": "/api/v1/cancelAllOrders"
+  }
+```
+
+## GetAllOrderService
+
+* This API to list all order.
+
+### Request header
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `Application Type` | `Content-Type: application/json`     |
+| `Authorization` | `Basic authenticate`     |
+| `Url` | `/api/v1/allOrders`     |
+| `Method` | `GET`     |
+
+### Request body
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `startTime` | `String`   | `stsrt time` |
+| `endTime` | `String`     | `end time` |
+| `symbols` | `String`     | `sysbol` |
+| `limit`   | `Integer`    | `Limit` |
+
+#### Example Curl
+
+``` java
+    curl --location 'http://localhost/api/v1/allOrders?startTime=1668916414000&endTime=1899916414000&symbols=XLM_THB%2C%20BTC_THB' \
+    --header 'Authorization: Basic {basic authenticate}' \
+    --data ''
+```
+
+### Response Body
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `symbol`    | `String`      | `order Id`    |
+| `orderId`   | `Long`        | `client Id`   |
+| `clientId`  | `String`      | `Symbol`      |
+| `price`     | `BigDecimal`  | `Side`        |
+| `origQty`   | `BigDecimal`  | `Type`        |
+| `executedQty` | `BigDecimal`| `Quanity`     |
+| `side`      | `String`      | `Price`       |
+| `status`    | `String`      | `Status`      |
+| `time`      | `Date`        | `TimeStamp`   |
+| `isWorking` | `Boolean`     | `TimeStamp`   |
+
+#### Status code
+
+| Http Code | Description                |
+| :-------- | :------------------------- |
+| `200`     | `Success`                  |
+| `400`     | `Not found.`               |
+| `400`     | `no order to remove`       |
+| `400`     | `This order is in processing.`       |
+| `400`     | `This order is being processed.`       |
+| `500`     | `Internal Error`           |
+
+##### Example Success
+
+```json
+  [
+    {
+        "symbol": "USDT",
+        "orderId": "test",
+        "clientId": 123.32,
+        "price": 213,
+        "origQty": "21232",
+        "executedQty": "21232",
+        "side": "21232",
+        "status": "21232",
+        "time": "21232",
+        "isWorking": "21232"
+    },{
+        "symbol": "USDT",
+        "orderId": "test",
+        "clientId": 123.32,
+        "price": 213,
+        "origQty": "21232",
+        "executedQty": "21232",
+        "side": "21232",
+        "status": "21232",
+        "time": "21232",
+        "isWorking": "21232"
+    }
+  ]
+```
+
+##### Example code 400, 500
+
+``` Json
+  {
+    "timestamp": "2023-12-05T14:18:15.076+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "This order is being processed.",
+    "path": "/api/v1/cancelAllOrders"
+  }
+```
+
+## OpenOrderService
+
+* This API for open order.
+
+### Request header
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `Application Type` | `Content-Type: application/json`     |
+| `Authorization` | `Basic authenticate`     |
+| `Url` | `/api/v1/allOrders`     |
+| `Method` | `GET`     |
+
+### Request body
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `symbols` | `String`   | `symbols` |
+
+#### Example Curl
+
+``` java
+  curl --location 'http://localhost/api/v1/openOrder?symbols=XRP_THB' \
+  --header 'Authorization: Basic ={basic authenticate}' \
+  --data ''
+```
+
+### Response Body
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `symbol`    | `String`      | `order Id`    |
+| `orderId`   | `Long`        | `client Id`   |
+| `clientId`  | `String`      | `Symbol`      |
+| `price`     | `BigDecimal`  | `Side`        |
+| `origQty`   | `BigDecimal`  | `Type`        |
+| `executedQty` | `BigDecimal`| `Quanity`     |
+| `side`      | `String`      | `Price`       |
+| `status`    | `String`      | `Status`      |
+| `time`      | `Date`        | `TimeStamp`   |
+| `isWorking` | `Boolean`     | `TimeStamp`   |
+
+#### Status code
+
+| Http Code | Description                |
+| :-------- | :------------------------- |
+| `200`     | `Success`                  |
+| `400`     | `Not found.`               |
+| `400`     | `no order to remove`       |
+| `400`     | `This order is in processing.`       |
+| `400`     | `This order is being processed.`       |
+| `500`     | `Internal Error`           |
+
+##### Example Success
+
+```json
+  [
+    {
+        "symbol": "USDT",
+        "orderId": "test",
+        "clientId": 123.32,
+        "price": 213,
+        "origQty": "21232",
+        "executedQty": "21232",
+        "side": "21232",
+        "status": "21232",
+        "time": "21232",
+        "isWorking": "21232"
+    },{
+        "symbol": "USDT",
+        "orderId": "test",
+        "clientId": 123.32,
+        "price": 213,
+        "origQty": "21232",
+        "executedQty": "21232",
+        "side": "21232",
+        "status": "21232",
+        "time": "21232",
+        "isWorking": "21232"
     }
   ]
 ```
