@@ -2,7 +2,7 @@
 
 ## Overview
 
-This API is provide information of trading.  
+Place order service providing about create order and get order delete order.
 
 ## Table of contents
 
@@ -14,6 +14,7 @@ This API is provide information of trading.
 * [Open Order Service](#openOrderService)
 
 ## PlaceOrderService
+  - To create new order by symbol side quanity price and clientId. 
 
 ### Request header
 
@@ -104,6 +105,7 @@ This API is provide information of trading.
 ```
 
 ## GetOrderService
+- This service to providing about order data it will return all of order follow symbol.
 
 ### Request header
 
@@ -188,16 +190,16 @@ This API is provide information of trading.
 
 ## CancelOrderService
 
-* This API to cancel order.
+* This API to cancel order by symbol.
 
 ### Request header
 
 | Parameter | Type     |
 | :-------- | :------- |
-| `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
-| `Url` | `/api/v1/cancelOrder`     |
-| `Method` | `POST`     |
+| `Application Type`   | `Content-Type: application/json`     |
+| `Authorization`      | `Basic authenticate`     |
+| `Url`                | `/api/v1/cancelOrder`     |
+| `Method` | `POST`    |
 
 ### Request body
 
