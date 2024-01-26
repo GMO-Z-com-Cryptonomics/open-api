@@ -182,11 +182,11 @@ Place order service providing about create order and get order delete order.
 
 ``` Json
   {
-    "timestamp": "2023-12-05T14:18:15.076+00:00",
+    "type": "about:blank",
+    "title": "Bad Request",
     "status": 400,
-    "error": "Required parameter 'symbol' is not present.",
-    "message": "This order is being processed.",
-    "path": "/api/v1/order"
+    "detail": "Required parameter 'symbol' is not present.",
+    "instance": "/api/v1/order"
   }
 ```
 
