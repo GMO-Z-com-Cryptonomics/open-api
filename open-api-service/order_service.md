@@ -16,9 +16,9 @@ Place order service providing about create order and get order delete order.
 ## PlaceOrderService
   - To create new order by symbol side quanity price and clientId. 
 
-  Note 
-    * If you put side is SELL it will check balance with BTC from symbol ex : BTC_THB
-    * Id oy put side is BUY it will check balance with THB from symbol ex : BTC_THB
+  Note :
+    - If you put side is SELL it will check balance with BTC from symbol ex : BTC_THB
+    - If you put side is BUY it will check balance with THB from symbol ex : BTC_THB
 
 ### Request header
 
