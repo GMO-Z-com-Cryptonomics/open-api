@@ -119,24 +119,23 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
+| `x-api-key` | `api-key`     |
 | `Url` | `/api/v1/order`     |
 | `Method` | `GET`     |
 
 ### Request parameter
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `symbol` | `String`     | `Symbol` |
-| `orderId` | `String`     | `Order Id` |
-| `clientId` | `BigDecimal`     | `Client Id` |
+| Parameter | Type     | Mandatory | Description                |
+| :-------- | :------- | :-------- | :------------------------- |
+| `symbol` | `String`     |  `Mandatory` | `Symbol` |
+| `orderId` | `String`     | `Optional` | `Order Id` |
+| `clientId` | `BigDecimal`     | `Optional` | `Client Id` |
 
 #### Example Curl
 
 ``` java
-  curl --location 'http://localhost/api/v1/openOrder?symbols=BTC_THB%2C%20XRP_THB&symbols=XRP_THB' 
-  --header 'Authorization: Basic {basic authenticate}' 
-  --data ''
+  curl --location 'http://localhost:9901/api/v1/order?symbol=BTC_THB&clientId=1231&orderId=2131' 
+  --header 'x-api-key: {x-api-key}'
 ```
 
 ### Response Body
@@ -157,15 +156,11 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `clientId must be unique.` |
-| `400`     | `Trade functionality is blocked!`   |
-| `400`     | `Ttrading is not enabled on this pair` |
-| `400`     | `We temporary stop market order. Sorry for inconvenience!` |
-| `400`     | `You have placed order more than 10 at the same location` |
-| `500`     | `Internal Error`           |
+| Http Code | Message                |  Descriptions  |
+| :-------- | :------------------------- | :-------- |
+| `200`     | `Success`                  |  Success |
+| `400`     | `Required parameter 'symbol' is not present.` |  Symbol is Null |
+| `400`     | `Not found.`   |  Not found data in market data |
 
 ##### Example Success
 
@@ -189,9 +184,9 @@ Place order service providing about create order and get order delete order.
   {
     "timestamp": "2023-12-05T14:18:15.076+00:00",
     "status": 400,
-    "error": "Bad Request",
+    "error": "Required parameter 'symbol' is not present.",
     "message": "This order is being processed.",
-    "path": "/api/v1/cancelOrder"
+    "path": "/api/v1/order"
   }
 ```
 
