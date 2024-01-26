@@ -16,37 +16,43 @@ Place order service providing about create order and get order delete order.
 ## PlaceOrderService
   - To create new order by symbol side quanity price and clientId. 
 
+  Note 
+    * If you put side is SELL it will check balance with BTC from symbol ex : BTC_THB
+    * Id oy put side is BUY it will check balance with THB from symbol ex : BTC_THB
+
 ### Request header
 
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
+| `x-api-key` | `x-api-key`     |
+| `x-api-signature` | `signature` |
 | `Url` | `/api/v1/order`     |
 | `Method` | `POST`     |
 
 ### Request body
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `symbol` | `String`     | `Currency for exchange` |
-| `side` | `String`     | `Side for action` |
-| `quantity` | `BigDecimal`     | `Quanity currency` |
-| `price` | `BigDecimal`     | `Price` |
-| `clientId` | `String`     | ` - ` |
+| Parameter | Type     | Mandatory | Description                |
+| :-------- | :------- | :-------- | :------------------------- |
+| `symbol` | `String`  | Mandatory | `Symbol as such BTC_THB` |
+| `side` | `String`    | Mandatory |`Side as such BUY, SELL` |
+| `quantity` | `BigDecimal` | Mandatory  | `Quanity` |
+| `price` | `BigDecimal`    | Mandatory  | `Price` |
+| `clientId` | `String`     | Optional   | ` - ` |
 
 #### Example
 
 ``` java
-  curl --location 'http://localhost/api/v1/order'
-  --header 'Content-Type: application/json'
-  --header 'Authorization: Basic {"basic authenticate"}' 
+  curl --location '{domain_url}/api/v1/order' 
+  --header 'x-api-key: {api-key}' 
+  --header 'x-api-signature: {signature}' 
+  --header 'Content-Type: application/json' 
   --data '{
-      "symbol" : "BTC_THB",
-      "side" : "BUY",
-      "quantity" : 0.2,
-      "price" : 1188000,
-      "cliendId" : ""
+      "symbol":"BTC_THB",
+      "side": "BUY",
+      "quantity": 0.01,
+      "price": 16009.266,
+      "clientId":"test_01"
   }'
 ```
 
@@ -66,14 +72,19 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `clientId must be unique.` |
-| `400`     | `Trade functionality is blocked!`   |
-| `400`     | `Ttrading is not enabled on this pair` |
-| `400`     | `We temporary stop market order. Sorry for inconvenience!` |
-| `400`     | `You have placed order more than 10 at the same location` |
+| Http Code | Message                |  Descritpions  |
+| :-------- | :------------------------- |  :---------------------  |
+| `200`     | `Success`                  |  Place order success     |
+| `400`     | `Not found symbol instant.` | Not found symbol in server. | 
+| `400`     | `Incorrect side.` | Side should be BUY or SELL. | 
+| `400`     | `Incorrect quantity`   |  Should be BigDecimal value ex : 0.01  | 
+| `400`     | `Price must be positive number` | Should be BigDecimal value ex : 11213.003 |
+| `400`     | `DUPLICATE_CLIENT_ORDER_ID` | User Id already place order. | 
+| `400`     | `You have placed order more than 10 at the same location` | when you have placed order more than 10 at the same location |
+| `400`     | `Price you have input has too much gap of the current price, please try again` | when Price you have input has too much gap of the current price, please try again |
+| `400`     | `coin Pair trading status not fetched, feign client not called` | when coin Pair trading status not fetched, feign client not called | 
+| `400`     | `Wallet not found` |  Not found user wallet. |
+| `400`     | `Insufficient Wallet Balance` |  User balance not enough. |
 | `500`     | `Internal Error`           |
 
 ##### Example
@@ -99,8 +110,8 @@ Place order service providing about create order and get order delete order.
     "timestamp": "2023-12-05T14:18:15.076+00:00",
     "status": 400,
     "error": "Bad Request",
-    "message": "This order is being processed.",
-    "path": "/api/v1/cancelOrder"
+    "message": "Insufficient Wallet Balance.",
+    "path": "/api/v1/order"
   }
 ```
 
