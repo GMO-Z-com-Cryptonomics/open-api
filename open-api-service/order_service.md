@@ -134,7 +134,7 @@ Place order service providing about create order and get order delete order.
 #### Example Curl
 
 ``` java
-  curl --location 'http://localhost:9901/api/v1/order?symbol=BTC_THB&clientId=1231&orderId=2131' 
+  curl --location '{domain_url}/api/v1/order?symbol=BTC_THB&clientId=1231&orderId=2131' 
   --header 'x-api-key: {x-api-key}'
 ```
 
@@ -199,28 +199,30 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type`   | `Content-Type: application/json`     |
-| `Authorization`      | `Basic authenticate`     |
-| `Url`                | `/api/v1/cancelOrder`     |
+| `x-api-key`      | `api-key`     |
+| `x-api-signature`      | `signature-key`     |
+| `Path`                | `/api/v1/cancelOrder`     |
 | `Method` | `POST`    |
 
 ### Request body
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `orderId` | `Long`     | `Symbol` |
-| `clientId` | `String`     | `Client Id` |
-| `symbol` | `String`     | `Symbol` |
+| Parameter | Type     |  Mandatory  | Description                |
+| :-------- | :------- |  :--------  | :------------------------- |
+| `orderId` | `Long`     |  `Mandatory`  | `Symbol` |
+| `clientId` | `String`   | `Optional`  | `Client Id` |
+| `symbol` | `String`     | `Optional` | `Symbol` |
 
 #### Example Curl
 
 ``` java
-    curl --location 'http://localhost/api/v1/cancelOrder' \
-    --header 'Content-Type: application/json' \
-    --header 'Authorization: Basic {basic authenticate}' \
+    curl --location '{domain_url}/api/v1/cancelOrder' 
+    --header 'x-api-key: {api-key}' 
+    --header 'x-api-signature: {signature-key}' 
+    --header 'Content-Type: application/json' 
     --data '{
-        "orderId" : "426265402",
-        "clientId" : "",
-        "symbol" : "BTC_THB"
+        "symbol":"BTC_THB",
+        "orderId": "1234",
+        "clientId":"test_1"
     }'
 ```
 
@@ -240,28 +242,29 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `Not found.`               |
-| `400`     | `no order to remove`       |
-| `400`     | `This order is in processing.`       |
-| `400`     | `This order is being processed.`       |
-| `500`     | `Internal Error`           |
+| Http Code | Message                |  Description  |
+| :-------- | :------------------------- | :------   |
+| `200`     | `Order Successfully removed` |  Success  |
+| `400`     | `Not found symbol instant.`|  Not found symbol in server  |
+| `400`     | `orderId or clientId is required.`|   OrderId and ClientId is null  |
+| `400`     | `no order to remove`       |  Not found order to remove  |
+| `400`     | `This order is in processing.`       |  Order is processing  |
+| `400`     | `This order is being processed.`       |  This order is being processed.  |
+| `400`     | `Failed to return balance after cancelling order.`  | Failed to return balance after cancelling order. |
 
 ##### Example Success
 
 ```json
   {
-    "orderId": "USDT",
-    "clientId": "test",
-    "symbol": 123.32,
-    "side": 213,
-    "type": "21232",
-    "quantity": "21232",
-    "price": "21232",
-    "status": "21232",
-    "timestamp": "21232",
+    "orderId": "1111",
+    "clientId": "1234",
+    "symbol": "BTC_THB",
+    "side": "BUY",
+    "type": "",
+    "quantity": 0.01,
+    "price": 16009.266,
+    "status": "PENDING",
+    "timestamp": "1706150442000",
   }
 ```
 
