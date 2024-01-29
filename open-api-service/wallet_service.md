@@ -6,7 +6,7 @@ Detailed documentation to present the Open-api Wallet-service features.
 ## Table of contents
 
 * [Deposit History](#deposithistory)
-* [With Drwa History](#withdrawhistory)
+* [With Draw History](#withdrawhistory)
 
 ## DepositHistory
 
@@ -90,7 +90,7 @@ Detailed documentation to present the Open-api Wallet-service features.
     
 ```
 
-##### Example code 400, 500
+##### Example error code
 
 ``` Json
   {
@@ -184,7 +184,7 @@ Detailed documentation to present the Open-api Wallet-service features.
     
 ```
 
-##### Example code 400, 500
+##### Example error code
 
 ``` Json
   {
