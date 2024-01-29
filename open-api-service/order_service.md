@@ -119,24 +119,23 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
+| `x-api-key` | `api-key`     |
 | `Url` | `/api/v1/order`     |
 | `Method` | `GET`     |
 
 ### Request parameter
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `symbol` | `String`     | `Symbol` |
-| `orderId` | `String`     | `Order Id` |
-| `clientId` | `BigDecimal`     | `Client Id` |
+| Parameter | Type     | Mandatory | Description                |
+| :-------- | :------- | :-------- | :------------------------- |
+| `symbol` | `String`     |  `Mandatory` | Symbol |
+| `orderId` | `String`     | `Mandatory` | OrderId can be null but clientId is not null |
+| `clientId` | `BigDecimal`     | `Mandatory` | ClientId can be null but orderId is not null. |
 
 #### Example Curl
 
 ``` java
-  curl --location 'http://localhost/api/v1/openOrder?symbols=BTC_THB%2C%20XRP_THB&symbols=XRP_THB' 
-  --header 'Authorization: Basic {basic authenticate}' 
-  --data ''
+  curl --location '{domain_url}/api/v1/order?symbol=BTC_THB&clientId=1231&orderId=2131' 
+  --header 'x-api-key: {x-api-key}'
 ```
 
 ### Response Body
@@ -157,15 +156,12 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `clientId must be unique.` |
-| `400`     | `Trade functionality is blocked!`   |
-| `400`     | `Ttrading is not enabled on this pair` |
-| `400`     | `We temporary stop market order. Sorry for inconvenience!` |
-| `400`     | `You have placed order more than 10 at the same location` |
-| `500`     | `Internal Error`           |
+| Http Code | Message                |  Descriptions  |
+| :-------- | :------------------------- | :-------- |
+| `200`     | `Success`                  |  Success |
+| `400`     | `Required parameter 'symbol' is not present.` |  Symbol is Null |
+| `400`     | `orderId or clientId is required.` |  OrderId and ClientId some value not null. |
+| `400`     | `Not found.`   |  Not found data in market data |
 
 ##### Example Success
 
@@ -187,11 +183,11 @@ Place order service providing about create order and get order delete order.
 
 ``` Json
   {
-    "timestamp": "2023-12-05T14:18:15.076+00:00",
+    "type": "about:blank",
+    "title": "Bad Request",
     "status": 400,
-    "error": "Bad Request",
-    "message": "This order is being processed.",
-    "path": "/api/v1/cancelOrder"
+    "detail": "Required parameter 'symbol' is not present.",
+    "instance": "/api/v1/order"
   }
 ```
 
@@ -204,28 +200,30 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type`   | `Content-Type: application/json`     |
-| `Authorization`      | `Basic authenticate`     |
-| `Url`                | `/api/v1/cancelOrder`     |
+| `x-api-key`      | `api-key`     |
+| `x-api-signature`      | `signature-key`     |
+| `Path`                | `/api/v1/cancelOrder`     |
 | `Method` | `POST`    |
 
 ### Request body
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `orderId` | `Long`     | `Symbol` |
-| `clientId` | `String`     | `Client Id` |
-| `symbol` | `String`     | `Symbol` |
+| Parameter | Type     |  Mandatory  | Description                |
+| :-------- | :------- |  :--------  | :------------------------- |
+| `orderId` | `Long`     |  `Mandatory`  | `Symbol` |
+| `clientId` | `String`   | `Optional`  | `Client Id` |
+| `symbol` | `String`     | `Optional` | `Symbol` |
 
 #### Example Curl
 
 ``` java
-    curl --location 'http://localhost/api/v1/cancelOrder' \
-    --header 'Content-Type: application/json' \
-    --header 'Authorization: Basic {basic authenticate}' \
+    curl --location '{domain_url}/api/v1/cancelOrder' 
+    --header 'x-api-key: {api-key}' 
+    --header 'x-api-signature: {signature-key}' 
+    --header 'Content-Type: application/json' 
     --data '{
-        "orderId" : "426265402",
-        "clientId" : "",
-        "symbol" : "BTC_THB"
+        "symbol":"BTC_THB",
+        "orderId": "1234",
+        "clientId":"test_1"
     }'
 ```
 
@@ -245,28 +243,29 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `Not found.`               |
-| `400`     | `no order to remove`       |
-| `400`     | `This order is in processing.`       |
-| `400`     | `This order is being processed.`       |
-| `500`     | `Internal Error`           |
+| Http Code | Message                |  Description  |
+| :-------- | :------------------------- | :------   |
+| `200`     | `Order Successfully removed` |  Success  |
+| `400`     | `Not found symbol instant.`|  Not found symbol in server  |
+| `400`     | `orderId or clientId is required.`|   OrderId and ClientId is null  |
+| `400`     | `no order to remove`       |  Not found order to remove  |
+| `400`     | `This order is in processing.`       |  Order is processing  |
+| `400`     | `This order is being processed.`       |  This order is being processed.  |
+| `400`     | `Failed to return balance after cancelling order.`  | Failed to return balance after cancelling order. |
 
 ##### Example Success
 
 ```json
   {
-    "orderId": "USDT",
-    "clientId": "test",
-    "symbol": 123.32,
-    "side": 213,
-    "type": "21232",
-    "quantity": "21232",
-    "price": "21232",
-    "status": "21232",
-    "timestamp": "21232",
+    "orderId": "1111",
+    "clientId": "1234",
+    "symbol": "BTC_THB",
+    "side": "BUY",
+    "type": "",
+    "quantity": 0.01,
+    "price": 16009.266,
+    "status": "PENDING",
+    "timestamp": "1706150442000",
   }
 ```
 
@@ -291,23 +290,25 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
-| `Url` | `/api/v1/cancelAllOrders`     |
+| `x-api-key` | `{api_key}`     |
+| `x-api-signature` | `{signature}`     |
+| `Path` | `/api/v1/cancelAllOrders`     |
 | `Method` | `POST`     |
 
 ### Request body
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `orderId` | `Long`     | `Symbol` |
-| `clientId` | `String`     | `Client Id` |
+| Parameter | Type     | Mandatory | Description                |
+| :-------- | :------- | :---------- | :------------------------- |
+| `orderId` | `Long`   | `Mandatory`  | `Symbol` |
+| `clientId` | `String` | `Optional`    | `Client Id` |
 
 #### Example Curl
 
 ``` java
-    curl --location 'http://localhost/api/v1/cancelAllOrders' \
+    curl --location '{domain_url}/api/v1/cancelAllOrders' \
     --header 'Content-Type: application/json' \
-    --header 'Authorization: Basic {basic authenticate}' \
+    --header 'x-api-key: {Api_key}' \
+    --header 'x-api-signature: {Signature}' \
     --data '{
         "orderId" : "426265402",
         "clientId" : "",
@@ -331,38 +332,36 @@ Place order service providing about create order and get order delete order.
 
 #### Status code
 
-| Http Code | Description                |
-| :-------- | :------------------------- |
-| `200`     | `Success`                  |
-| `400`     | `Not found.`               |
-| `400`     | `no order to remove`       |
-| `400`     | `This order is in processing.`       |
-| `400`     | `This order is being processed.`       |
-| `500`     | `Internal Error`           |
+| Http Code | Message                |  Description |
+| :-------- | :------------------------- | :------------- |
+| `200`     | `Success`                  | Cancel success. |
+| `400`     | `Not found symbol instant.`               | Not found symbol server. |
+| `400`     | `no order to remove`       | Not found symbol for remove. |
+| `400`     | `Could not cancel order. Order does not belong to the logged in user.`       |  Could not cancel order. Order does not belong to the logged in user.  |
 
 ##### Example Success
 
 ```json
   [
     {
-        "orderId": "USDT",
-        "clientId": "test",
-        "symbol": 123.32,
-        "side": 213,
-        "type": "21232",
-        "quantity": "21232",
-        "price": "21232",
-        "status": "21232",
+        "orderId": "001",
+        "clientId": "test_01",
+        "symbol": "BTC_THB",
+        "side": "BUY",
+        "type": "",
+        "quantity": 0.01,
+        "price": 16543.001,
+        "status": "PENDING",
         "timestamp": "21232"
     }, {
-        "orderId": "USDT",
-        "clientId": "test",
-        "symbol": 123.32,
-        "side": 213,
-        "type": "21232",
-        "quantity": "21232",
-        "price": "21232",
-        "status": "21232",
+        "orderId": "002",
+        "clientId": "test_02",
+        "symbol": "BTC_THB",
+        "side": "BUY",
+        "type": "",
+        "quantity": 0.01,
+        "price": 165434.001,
+        "status": "PENDING",
         "timestamp": "21232"
     }
   ]
@@ -375,7 +374,7 @@ Place order service providing about create order and get order delete order.
     "timestamp": "2023-12-05T14:18:15.076+00:00",
     "status": 400,
     "error": "Bad Request",
-    "message": "This order is being processed.",
+    "message": "Not found symbol for remove.",
     "path": "/api/v1/cancelAllOrders"
   }
 ```
@@ -389,24 +388,24 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
-| `Url` | `/api/v1/allOrders`     |
+| `x-api-key` | `zpi-key`     |
+| `Path` | `/api/v1/allOrders`     |
 | `Method` | `GET`     |
 
 ### Request body
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `startTime` | `String`   | `stsrt time` |
-| `endTime` | `String`     | `end time` |
-| `symbols` | `String`     | `sysbol` |
-| `limit`   | `Integer`    | `Limit` |
+| Parameter | Type     | Mandatory | Description                |
+| :-------- | :------- | :-------- | :------------------------- |
+| `startTime` | `String`  | `Optinal` | `stsrt time` |
+| `endTime` | `String`    | `Optinal` | `end time` |
+| `symbols` | `String`    | `Optinal` | `sysbol` |
+| `limit`   | `Integer`   | `Optinal` | `Limit` |
 
 #### Example Curl
 
 ``` java
-    curl --location 'http://localhost/api/v1/allOrders?startTime=1668916414000&endTime=1899916414000&symbols=XLM_THB%2C%20BTC_THB' \
-    --header 'Authorization: Basic {basic authenticate}' \
+    curl --location '{domain_url}/api/v1/allOrders?startTime=1668916414000&endTime=1899916414000&symbols=XLM_THB%2C%20BTC_THB' \
+    --header 'x-api-key: api-key' \
     --data ''
 ```
 
@@ -414,16 +413,16 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `symbol`    | `String`      | `order Id`    |
-| `orderId`   | `Long`        | `client Id`   |
-| `clientId`  | `String`      | `Symbol`      |
-| `price`     | `BigDecimal`  | `Side`        |
-| `origQty`   | `BigDecimal`  | `Type`        |
-| `executedQty` | `BigDecimal`| `Quanity`     |
-| `side`      | `String`      | `Price`       |
-| `status`    | `String`      | `Status`      |
+| `symbol`    | `String`      | `symbol`    |
+| `orderId`   | `Long`        | `order Id`   |
+| `clientId`  | `String`      | `client Id`      |
+| `price`     | `BigDecimal`  | `price`        |
+| `origQty`   | `BigDecimal`  | `original quanity`        |
+| `executedQty` | `BigDecimal`| `execute quanity`     |
+| `side`      | `String`      | `BUY or SELL`       |
+| `status`    | `String`      | `status`      |
 | `time`      | `Date`        | `TimeStamp`   |
-| `isWorking` | `Boolean`     | `TimeStamp`   |
+| `isWorking` | `Boolean`     | `woring flag`   |
 
 #### Status code
 
@@ -431,37 +430,36 @@ Place order service providing about create order and get order delete order.
 | :-------- | :------------------------- |
 | `200`     | `Success`                  |
 | `400`     | `Not found.`               |
-| `400`     | `no order to remove`       |
-| `400`     | `This order is in processing.`       |
-| `400`     | `This order is being processed.`       |
-| `500`     | `Internal Error`           |
+| `400`     | `StartTime must value must be in unix time stamp milliseconds`       |
+| `400`     | `EndTime must value must be in unix time stamp milliseconds`       |
+| `400`     | `startTime must be before endTime`       |
 
 ##### Example Success
 
 ```json
   [
     {
-        "symbol": "USDT",
-        "orderId": "test",
-        "clientId": 123.32,
-        "price": 213,
-        "origQty": "21232",
-        "executedQty": "21232",
-        "side": "21232",
-        "status": "21232",
-        "time": "21232",
-        "isWorking": "21232"
+        "symbol": "BTC_THB",
+        "orderId": "001",
+        "clientId": "test_01",
+        "price": 165473.012,
+        "origQty": 0.01,
+        "executedQty": 0.01,
+        "side": "SELL",
+        "status": "PENDING",
+        "time": "212322123",
+        "isWorking": "true"
     },{
-        "symbol": "USDT",
-        "orderId": "test",
-        "clientId": 123.32,
-        "price": 213,
-        "origQty": "21232",
-        "executedQty": "21232",
-        "side": "21232",
-        "status": "21232",
-        "time": "21232",
-        "isWorking": "21232"
+        "symbol": "BTC_THB",
+        "orderId": "002",
+        "clientId": "test_02",
+        "price": 165473.012,
+        "origQty": 0.01,
+        "executedQty": 0.01,
+        "side": "SELL",
+        "status": "PENDING",
+        "time": "212322123",
+        "isWorking": "true"
     }
   ]
 ```
@@ -473,8 +471,8 @@ Place order service providing about create order and get order delete order.
     "timestamp": "2023-12-05T14:18:15.076+00:00",
     "status": 400,
     "error": "Bad Request",
-    "message": "This order is being processed.",
-    "path": "/api/v1/cancelAllOrders"
+    "message": "startTime must be before endTime.",
+    "path": "/api/v1/allOrders"
   }
 ```
 
