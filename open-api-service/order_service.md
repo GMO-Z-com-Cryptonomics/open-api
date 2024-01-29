@@ -167,15 +167,16 @@ Place order service providing about create order and get order delete order.
 
 ```json
   {
-    "orderId": "USDT",
-    "clientId": "test",
-    "symbol": 123.32,
-    "side": 213,
-    "type": "21232",
-    "quantity": "21232",
-    "price": "21232",
-    "status": "21232",
-    "timestamp": "21232",
+    "symbol": "XLM_THB",
+    "orderId": 510229768,
+    "clientId": "test_02",
+    "price": 4.200000000000000000,
+    "origQty": 200000.000000000000000000,
+    "executedQty": 0E-18,
+    "side": "BUY",
+    "status": "QUEUED",
+    "time": "2024-01-29T06:41:09.000+00:00",
+    "isWorking": true
   }
 ```
 
