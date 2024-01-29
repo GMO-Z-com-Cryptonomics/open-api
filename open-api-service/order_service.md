@@ -127,9 +127,9 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Mandatory | Description                |
 | :-------- | :------- | :-------- | :------------------------- |
-| `symbol` | `String`     |  `Mandatory` | `Symbol` |
-| `orderId` | `String`     | `Optional` | `Order Id` |
-| `clientId` | `BigDecimal`     | `Optional` | `Client Id` |
+| `symbol` | `String`     |  `Mandatory` | Symbol |
+| `orderId` | `String`     | `Mandatory` | OrderId can be null but clientId is not null |
+| `clientId` | `BigDecimal`     | `Mandatory` | ClientId can be null but orderId is not null. |
 
 #### Example Curl
 
@@ -160,6 +160,7 @@ Place order service providing about create order and get order delete order.
 | :-------- | :------------------------- | :-------- |
 | `200`     | `Success`                  |  Success |
 | `400`     | `Required parameter 'symbol' is not present.` |  Symbol is Null |
+| `400`     | `orderId or clientId is required.` |  OrderId and ClientId some value not null. |
 | `400`     | `Not found.`   |  Not found data in market data |
 
 ##### Example Success
