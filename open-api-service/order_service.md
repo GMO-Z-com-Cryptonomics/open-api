@@ -87,19 +87,19 @@ Place order service providing about create order and get order delete order.
 
 ```json
   {
-    "orderId": "USDT",
-    "clientId": "test",
-    "symbol": 123.32,
-    "side": 213,
-    "type": "21232",
-    "quantity": "21232",
-    "price": "21232",
-    "status": "21232",
-    "timestamp": "21232",
+    "orderId": 510229769,
+    "clientId": "test_01",
+    "symbol": "XLM_THB",
+    "side": "BUY",
+    "type": "ZCOM",
+    "quantity": 200000,
+    "price": 4.20,
+    "status": "QUEUED",
+    "timestamp": "2024-01-29T08:26:53.727+00:00"
   }
 ```
 
-##### Example code 400, 500
+##### Example error code
 
 ``` Json
   {
@@ -142,17 +142,16 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `symbol` | `String`     | `ID of order` |
-| `orderId` | `String`     | `ID od client` |
-| `clientId` | `String`     | `Symbol` |
-| `price` | `String`     | `Side` |
-| `origQty` | `String`     | `Type of currency` |
-| `executedQty` | `BigDecimal`     | `Quanity` |
+| `symbol` | `String`     | `symbol` |
+| `orderId` | `Long`     | `ID of client` |
+| `clientId` | `String`     | `ID of client` |
 | `price` | `BigDecimal`     | `Price` |
-| `side` | `String`     | `Status` |
-| `status` | `Date`     | `TimeStamp` |
+| `origQty` | `BigDecimal`     | `original qaunity` |
+| `executedQty` | `BigDecimal`     | `execute quanity` |
+| `side` | `String`     | `BUY or SELL` |
+| `status` | `String`     | `status` |
 | `time` | `Date`     | `TimeStamp` |
-| `isWorking` | `Date`     | `TimeStamp` |
+| `isWorking` | `Boolean`     | `working flag` |
 
 #### Status code
 
@@ -167,19 +166,20 @@ Place order service providing about create order and get order delete order.
 
 ```json
   {
-    "orderId": "USDT",
-    "clientId": "test",
-    "symbol": 123.32,
-    "side": 213,
-    "type": "21232",
-    "quantity": "21232",
-    "price": "21232",
-    "status": "21232",
-    "timestamp": "21232",
+    "symbol": "XLM_THB",
+    "orderId": 510229768,
+    "clientId": "test_02",
+    "price": 4.200000000000000000,
+    "origQty": 200000.000000000000000000,
+    "executedQty": 0E-18,
+    "side": "BUY",
+    "status": "QUEUED",
+    "time": "2024-01-29T06:41:09.000+00:00",
+    "isWorking": true
   }
 ```
 
-##### Example code 400, 500
+##### Example error code
 
 ``` Json
   {
@@ -209,9 +209,9 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     |  Mandatory  | Description                |
 | :-------- | :------- |  :--------  | :------------------------- |
-| `orderId` | `Long`     |  `Mandatory`  | `Symbol` |
-| `clientId` | `String`   | `Optional`  | `Client Id` |
-| `symbol` | `String`     | `Optional` | `Symbol` |
+| `orderId` | `Long`     |  `Optional`  | `ID of order` |
+| `clientId` | `String`   | `Optional`  | `ID of Client` |
+| `symbol` | `String`     | `Mandatory` | `Symbol` |
 
 #### Example Curl
 
@@ -269,7 +269,7 @@ Place order service providing about create order and get order delete order.
   }
 ```
 
-##### Example code 400, 500
+##### Example error code.
 
 ``` Json
   {
@@ -299,21 +299,20 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Mandatory | Description                |
 | :-------- | :------- | :---------- | :------------------------- |
-| `orderId` | `Long`   | `Mandatory`  | `Symbol` |
+| `symbol` | `String`   | `Mandatory`  | `Symbol` |
 | `clientId` | `String` | `Optional`    | `Client Id` |
 
 #### Example Curl
 
 ``` java
-    curl --location '{domain_url}/api/v1/cancelAllOrders' \
-    --header 'Content-Type: application/json' \
-    --header 'x-api-key: {Api_key}' \
-    --header 'x-api-signature: {Signature}' \
-    --data '{
-        "orderId" : "426265402",
-        "clientId" : "",
-        "symbol" : "BTC_THB"
-    }'
+  curl --location '{domain_url}/api/v1/cancelAllOrders' \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: {Api_key}' \
+  --header 'x-api-signature: {Signature}' \
+  --data '{
+      "clientId" : "test_01",
+      "symbol" : "BTC_THB"
+  }'
 ```
 
 ### Response Body
@@ -367,7 +366,7 @@ Place order service providing about create order and get order delete order.
   ]
 ```
 
-##### Example code 400, 500
+##### Example error code.
 
 ``` Json
   {
@@ -388,7 +387,7 @@ Place order service providing about create order and get order delete order.
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `x-api-key` | `zpi-key`     |
+| `x-api-key` | `api-key`     |
 | `Path` | `/api/v1/allOrders`     |
 | `Method` | `GET`     |
 
@@ -464,7 +463,7 @@ Place order service providing about create order and get order delete order.
   ]
 ```
 
-##### Example code 400, 500
+##### Example error code
 
 ``` Json
   {
@@ -478,15 +477,15 @@ Place order service providing about create order and get order delete order.
 
 ## OpenOrderService
 
-* This API for open order.
+* This API for get order is status QUEUED, PARTIALLY_EXECUTED, CREATED.
 
 ### Request header
 
 | Parameter | Type     |
 | :-------- | :------- |
 | `Application Type` | `Content-Type: application/json`     |
-| `Authorization` | `Basic authenticate`     |
-| `Url` | `/api/v1/allOrders`     |
+| `x-api-key` | `x-api`     |
+| `Url` | `/api/v1/openOrder`     |
 | `Method` | `GET`     |
 
 ### Request body
@@ -498,8 +497,8 @@ Place order service providing about create order and get order delete order.
 #### Example Curl
 
 ``` java
-  curl --location 'http://localhost/api/v1/openOrder?symbols=XRP_THB' \
-  --header 'Authorization: Basic ={basic authenticate}' \
+  curl --location '{domain_url}/api/v1/openOrder?symbols=XRP_THB' \
+  --header 'x-api-key: {api-key}' \
   --data ''
 ```
 
@@ -507,66 +506,49 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `symbol`    | `String`      | `order Id`    |
-| `orderId`   | `Long`        | `client Id`   |
-| `clientId`  | `String`      | `Symbol`      |
-| `price`     | `BigDecimal`  | `Side`        |
-| `origQty`   | `BigDecimal`  | `Type`        |
-| `executedQty` | `BigDecimal`| `Quanity`     |
-| `side`      | `String`      | `Price`       |
+| `symbol`    | `String`      | `symbol`    |
+| `orderId`   | `Long`        | `Order Id`   |
+| `clientId`  | `String`      | `client ID`      |
+| `price`     | `BigDecimal`  | `Price`        |
+| `origQty`   | `BigDecimal`  | `Original qaunity`        |
+| `executedQty` | `BigDecimal`| `execute quanity`     |
+| `side`      | `String`      | `SELL or BUY`       |
 | `status`    | `String`      | `Status`      |
 | `time`      | `Date`        | `TimeStamp`   |
-| `isWorking` | `Boolean`     | `TimeStamp`   |
+| `isWorking` | `Boolean`     | `working flag`   |
 
 #### Status code
 
 | Http Code | Description                |
 | :-------- | :------------------------- |
 | `200`     | `Success`                  |
-| `400`     | `Not found.`               |
-| `400`     | `no order to remove`       |
-| `400`     | `This order is in processing.`       |
-| `400`     | `This order is being processed.`       |
-| `500`     | `Internal Error`           |
 
 ##### Example Success
 
 ```json
   [
     {
-        "symbol": "USDT",
-        "orderId": "test",
-        "clientId": 123.32,
-        "price": 213,
-        "origQty": "21232",
-        "executedQty": "21232",
-        "side": "21232",
-        "status": "21232",
-        "time": "21232",
-        "isWorking": "21232"
+        "symbol": "BTC_THB",
+        "orderId": "001",
+        "clientId": "test_01",
+        "price": 165473.012,
+        "origQty": 0.01,
+        "executedQty": 0.01,
+        "side": "SELL",
+        "status": "CREATED",
+        "time": "212322123",
+        "isWorking": "true"
     },{
-        "symbol": "USDT",
-        "orderId": "test",
-        "clientId": 123.32,
-        "price": 213,
-        "origQty": "21232",
-        "executedQty": "21232",
-        "side": "21232",
-        "status": "21232",
-        "time": "21232",
-        "isWorking": "21232"
+        "symbol": "BTC_THB",
+        "orderId": "002",
+        "clientId": "test_02",
+        "price": 165473.012,
+        "origQty": 0.01,
+        "executedQty": 0.01,
+        "side": "SELL",
+        "status": "CREATED",
+        "time": "212322123",
+        "isWorking": "true"
     }
   ]
-```
-
-##### Example code 400, 500
-
-``` Json
-  {
-    "timestamp": "2023-12-05T14:18:15.076+00:00",
-    "status": 400,
-    "error": "Bad Request",
-    "message": "This order is being processed.",
-    "path": "/api/v1/cancelAllOrders"
-  }
 ```
