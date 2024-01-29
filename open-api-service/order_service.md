@@ -142,17 +142,17 @@ Place order service providing about create order and get order delete order.
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `symbol` | `String`     | `ID of order` |
-| `orderId` | `String`     | `ID od client` |
-| `clientId` | `String`     | `Symbol` |
-| `price` | `String`     | `Side` |
-| `origQty` | `String`     | `Type of currency` |
-| `executedQty` | `BigDecimal`     | `Quanity` |
+| `symbol` | `String`     | `symbol` |
+| `orderId` | `Long`     | `ID od client` |
+| `clientId` | `String`     | `cluent Id` |
 | `price` | `BigDecimal`     | `Price` |
-| `side` | `String`     | `Status` |
-| `status` | `Date`     | `TimeStamp` |
+| `origQty` | `BigDecimal`     | `original qaunity` |
+| `executedQty` | `BigDecimal`     | `execute quanity` |
+| `price` | `BigDecimal`     | `Price` |
+| `side` | `String`     | `BUY or SELL` |
+| `status` | `String`     | `status` |
 | `time` | `Date`     | `TimeStamp` |
-| `isWorking` | `Date`     | `TimeStamp` |
+| `isWorking` | `Boolean`     | `working flag` |
 
 #### Status code
 
