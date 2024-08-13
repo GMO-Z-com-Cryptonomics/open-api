@@ -4,7 +4,9 @@
 This api to provide information rate of side buy and sell of otc.
 
 ##### Note
+```
  Please contact admin to generate x-api-key to use this API.
+```
 
 #### GET RATE SIDE SELL
 ```
