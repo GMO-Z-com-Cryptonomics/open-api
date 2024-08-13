@@ -6,14 +6,14 @@ This API to provide information of the working capital.
 ##### Note :
     Please contact admin to generate x-api-key.
 
-##### Working Capital Coin
+##### Available USDT working Capital
 Request body
 ``` curl
 curl --location 'https://open-api.exchange-staging.z.com/api/v1/working-capital?symbol=USDT' \
 --header 'x-api-key: user2'
 ```
 
-##### Working Capital Amount balance
+##### Available THB working Capital
 Request body
 ``` curl
 curl --location 'https://open-api.exchange-staging.z.com/api/v1/working-capital?symbol=THB' \
