@@ -42,6 +42,6 @@ curl --location 'https://open-api.exchange-staging.z.com/api/v1/working-capital?
 ##### Http Response code
 | code | Description |
 | :------ | :------- |
-| 200   |   Sucess |
+| 200   |   Success |
 | 401 | Unauthorize |
 | 400 | Bad Request |
