@@ -1,4 +1,4 @@
-# "Working" Capital Service  <span style="font-size: 0.8em;">[🚀](../Readme.md#software-development-api-documents)</span>
+# Working Capital Service  <span style="font-size: 0.8em;">[🚀](../Readme.md#software-development-api-documents)</span>
 
 ## Overview
 This API to provide information of the working capital.
