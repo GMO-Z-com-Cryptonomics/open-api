@@ -10,12 +10,16 @@ This api to provide information rate of side buy and sell of otc.
 
 ##### GET RATE SIDE SELL
 ```
+Request body
+
 curl --location '{{domian}}/api/v1/rate?side=SELL' \
 --header 'x-api-key: {{x-api-key}}'
 ```
 
 ##### GET RATE SIDE BUY
 ```
+Request body
+
 curl --location '{{x-api-key}}/api/v1/rate?side=BUY' \
 --header 'x-api-key: {{x-api-key}}'
 ```
