@@ -6,7 +6,7 @@ This API to provide information of the working capital.
 ##### Note :
     Please contact admin to generate x-api-key.
 
-#### Available USDT working Capital
+### Available USDT working Capital
 
 ##### Request Header
 | Parameter | Type     |
@@ -51,7 +51,7 @@ curl --location 'https://open-api.ex.z.com/api/v1/working-capital?symbol=USDT' \
 | `401` | `Unauthorize` |
 | `400` | `Bad Request` |
 
-#### Available THB working Capital
+### Available THB working Capital
 
 ##### Request Header
 | Parameter | Type     |

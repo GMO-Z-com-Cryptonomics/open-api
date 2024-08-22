@@ -8,7 +8,7 @@ This api to provide information rate of side buy and sell of otc.
     Please contact admin to generate x-api-key to use this API.
 ```
 
-#### GET RATE SIDE SELL
+### GET RATE SIDE SELL
 
 ##### Request header
 
@@ -58,7 +58,7 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
 | `401` | `Unauthorize` |
 | `400` | `Bad request` |
 
-#### GET RATE SIDE BUY
+### GET RATE SIDE BUY
 
 ##### Request header
 
