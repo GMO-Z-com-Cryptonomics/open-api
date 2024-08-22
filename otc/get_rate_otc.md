@@ -17,7 +17,7 @@ This api to provide information rate of side buy and sell of otc.
 | `Application Type` | `Content-Type: application/json`     |
 | `x-api-key` | `x-api-key`     |
 | `Method` | `GET`     |
-| `Doamin` | `https://open-api.ex.z.com` |
+| `Domain` | `https://open-api.ex.z.com` |
 | `Url` | `/api/v1/rate?side=SELL`     |
 | `Param` | `Side = SELL`     |
 
@@ -50,7 +50,7 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
 }
 ```
 
-#### Response code
+##### Response code
 
 | `Code` | `Message`     |
 | :-------- | :------- |
@@ -67,7 +67,7 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
 | `Application Type` | `Content-Type: application/json`     |
 | `x-api-key` | `x-api-key`     |
 | `Method` | `GET`     |
-| `Doamin` | `https://open-api.ex.z.com` |
+| `Domain` | `https://open-api.ex.z.com` |
 | `Url` | `/api/v1/rate?side=BUY`     |
 | `Param` | `Side = BUY`     |
 
@@ -100,7 +100,7 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=BUY' \
 }
 ```
 
-#### Response code
+##### Response code
 
 | `Code` | `Message`     |
 | :-------- | :------- |
