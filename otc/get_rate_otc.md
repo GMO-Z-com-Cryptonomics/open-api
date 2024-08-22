@@ -34,7 +34,6 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
         "symbol": "USDT_THB",
         "side": "SELL",
         "price": 36.14,
-        "spread": 0.01,
         "createdAt": "2024-08-13T04:45:54.000+00:00"
     }
 ```
@@ -49,9 +48,16 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
     "instance": "/api/v1/rate"
 }
 ```
+##### Response Body
+| Field | Description     |
+| :-------- | :------- |
+| `otcPriceId` | `Id of otc price`     |
+| `symbol` | `symbol`     |
+| `side` | `side of rate`     |
+| `price` | `price otc rate` |
+| `createdAt` | `date of otc price`     |
 
-##### Response code
-
+##### Response Code
 | `Code` | `Message`     |
 | :-------- | :------- |
 | `200`   |   `Success` |
@@ -84,7 +90,6 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=BUY' \
         "symbol": "USDT_THB",
         "side": "BUY",
         "price": 36.71,
-        "spread": 0.01,
         "createdAt": "2024-08-13T04:44:57.000+00:00"
     }
 ```
@@ -99,6 +104,15 @@ curl --location 'https://open-api.ex.z.com/api/v1/rate?side=BUY' \
     "instance": "/api/v1/rate"
 }
 ```
+
+##### Response Body
+| Field | Description     |
+| :-------- | :------- |
+| `otcPriceId` | `Id of otc price`     |
+| `symbol` | `symbol`     |
+| `side` | `side of rate`     |
+| `price` | `price otc rate` |
+| `createdAt` | `date of otc price`     |
 
 ##### Response code
 

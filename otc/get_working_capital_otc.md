@@ -44,6 +44,12 @@ curl --location 'https://open-api.ex.z.com/api/v1/working-capital?symbol=USDT' \
 }
 ```
 
+##### Response Body
+| Field | Description     |
+| :-------- | :------- |
+| `availableBalance` | `available balance of usdt`     |
+| `withdrawBankAccounts` | `null`     |
+
 ##### Response code
 | code | Message |
 | :------ | :------- |
@@ -88,6 +94,12 @@ curl --location 'https://open-api.ex.z.com/api/v1/working-capital?symbol=THB' \
     "instance": "/api/v1/working-capital"
 }
 ```
+
+##### Response Body
+| Field | Description     |
+| :-------- | :------- |
+| `availableBalance` | `available balance thb`     |
+| `withdrawBankAccounts` | `null`     |
 
 ##### Response code
 | code | Message |
