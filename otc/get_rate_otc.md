@@ -5,37 +5,29 @@ This api to provide information rate of side buy and sell of otc.
 
 ##### Note
 ```
- Please contact admin to generate x-api-key to use this API.
+    Please contact admin to generate x-api-key to use this API.
 ```
 
-##### GET RATE SIDE SELL
-```
-Request body
+### GET RATE SIDE SELL
 
-curl --location '{{domian}}/api/v1/rate?side=SELL' \
+##### Request header
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `Application Type` | `Content-Type: application/json`     |
+| `x-api-key` | `x-api-key`     |
+| `Method` | `GET`     |
+| `Domain` | `https://open-api.ex.z.com` |
+| `Url` | `/api/v1/rate?side=SELL`     |
+| `Param` | `Side = SELL`     |
+
+##### Request Body
+```
+curl --location 'https://open-api.ex.z.com/api/v1/rate?side=SELL' \
 --header 'x-api-key: {{x-api-key}}'
 ```
 
-##### GET RATE SIDE BUY
-```
-Request body
-
-curl --location '{{x-api-key}}/api/v1/rate?side=BUY' \
---header 'x-api-key: {{x-api-key}}'
-```
-
-##### Example
-``` json
-    {
-        "otcPriceId": 3651411,
-        "symbol": "USDT_THB",
-        "side": "BUY",
-        "price": 36.71,
-        "spread": 0.01,
-        "createdAt": "2024-08-13T04:44:57.000+00:00"
-    }
-```
-
+##### Example response SELL side
 ``` json
     {
         "otcPriceId": 3651430,
@@ -47,7 +39,7 @@ curl --location '{{x-api-key}}/api/v1/rate?side=BUY' \
     }
 ```
 
-##### Example bad request
+##### Example resposne fail Bad Request
 ``` json
 {
     "type": "about:blank",
@@ -58,9 +50,60 @@ curl --location '{{x-api-key}}/api/v1/rate?side=BUY' \
 }
 ```
 
-#### Http Response code
-| code | Description |
-| :------ | :------- |
-| 200   |   Success |
-| 401 | Unauthorize |
-| 400 | Bad request |
+##### Response code
+
+| `Code` | `Message`     |
+| :-------- | :------- |
+| `200`   |   `Success` |
+| `401` | `Unauthorize` |
+| `400` | `Bad request` |
+
+### GET RATE SIDE BUY
+
+##### Request header
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `Application Type` | `Content-Type: application/json`     |
+| `x-api-key` | `x-api-key`     |
+| `Method` | `GET`     |
+| `Domain` | `https://open-api.ex.z.com` |
+| `Url` | `/api/v1/rate?side=BUY`     |
+| `Param` | `Side = BUY`     |
+
+##### Request Body
+```
+curl --location 'https://open-api.ex.z.com/api/v1/rate?side=BUY' \
+--header 'x-api-key: {{x-api-key}}'
+```
+
+##### Example response BUY side
+``` json
+    {
+        "otcPriceId": 3651411,
+        "symbol": "USDT_THB",
+        "side": "BUY",
+        "price": 36.71,
+        "spread": 0.01,
+        "createdAt": "2024-08-13T04:44:57.000+00:00"
+    }
+```
+
+##### Example resposne Bad Request
+``` json
+{
+    "type": "about:blank",
+    "title": "Bad Request",
+    "status": 400,
+    "detail": "{\"message\":\"Unknown side: BU\",\"timestamp\":\"2024-08-13T13:53:41.99352743\"}",
+    "instance": "/api/v1/rate"
+}
+```
+
+##### Response code
+
+| `Code` | `Message`     |
+| :-------- | :------- |
+| `200`   |   `Success` |
+| `401` | `Unauthorize` |
+| `400` | `Bad request` |
